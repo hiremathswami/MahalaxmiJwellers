@@ -1,0 +1,246 @@
+@import "tailwindcss";
+
+/* ── Brand Design Tokens (Light Theme — Silver Jewellery) ── */
+@theme inline {
+  --color-jewel-black: #0A0A0A;
+  --color-silver: #9CA3AF;
+  --color-silver-light: #D1D5DB;
+  --color-silver-dark: #6B7280;
+  --color-cream: #F5F0E8;
+  --color-champagne: #F8F7F5;
+  --color-charcoal: #1A1A1A;
+  --color-warm-gray: #6B7280;
+  --color-light-gray: #F3F4F6;
+  --color-border: rgba(0, 0, 0, 0.08);
+
+  --font-cormorant: var(--font-cormorant-garamond), "Georgia", serif;
+  --font-inter: var(--font-inter-family), "Helvetica Neue", sans-serif;
+
+  --tracking-cta: 0.15em;
+
+  --animate-fade-in: fade-in 0.6s ease-out forwards;
+  --animate-slide-up: slide-up 0.6s ease-out forwards;
+  --animate-pulse-soft: pulse-soft 2s ease-in-out infinite;
+  --animate-bounce-gentle: bounce-gentle 2s ease-in-out infinite;
+}
+
+/* ── Keyframes ── */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+@keyframes bounce-gentle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* ── Global Styles ── */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #FFFFFF;
+  color: #1A1A1A;
+  font-family: var(--font-inter);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background-color: rgba(156, 163, 175, 0.3);
+  color: #1A1A1A;
+}
+
+/* ── Scrollbar Styling ── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F3F4F6;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #9CA3AF;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #6B7280;
+}
+
+/* ── Primary CTA Button (Dark / Luxury Black) ── */
+.btn-gold {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 36px;
+  background-color: #1C1C1E;
+  color: #FFFFFF;
+  font-family: var(--font-inter);
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transition: all 300ms ease-in-out;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-gold:hover {
+  background-color: #3A3A3C;
+  transform: translateY(-1px);
+}
+
+/* ── Ghost Button ── */
+.btn-ghost-gold {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 36px;
+  background-color: transparent;
+  color: #1C1C1E;
+  border: 1px solid #1C1C1E;
+  font-family: var(--font-inter);
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transition: all 300ms ease-in-out;
+  cursor: pointer;
+}
+
+.btn-ghost-gold:hover {
+  background-color: #1C1C1E;
+  color: #FFFFFF;
+}
+
+/* ── Card / Secondary Button ── */
+.btn-black {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 28px;
+  background-color: #F3F4F6;
+  color: #1C1C1E;
+  font-family: var(--font-inter);
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  transition: all 300ms ease-in-out;
+  cursor: pointer;
+}
+
+.btn-black:hover {
+  background-color: #1C1C1E;
+  color: #FFFFFF;
+  border-color: #1C1C1E;
+}
+
+/* ── Divider ── */
+.divider-gold {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(156, 163, 175, 0.4), transparent);
+}
+
+/* ── Form Inputs (Dark background variant — hero/footer/auth) ── */
+.input-luxury {
+  width: 100%;
+  padding: 14px 16px;
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #F5F0E8;
+  font-family: var(--font-inter);
+  font-size: 14px;
+  transition: border-color 300ms ease-in-out;
+  outline: none;
+}
+
+.input-luxury:focus {
+  border-color: #9CA3AF;
+}
+
+.input-luxury::placeholder {
+  color: #9CA3AF;
+}
+
+/* ── Form Inputs (Light background variant — main pages) ── */
+.input-light {
+  width: 100%;
+  padding: 14px 16px;
+  background-color: #FFFFFF;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  color: #1A1A1A;
+  font-family: var(--font-inter);
+  font-size: 14px;
+  transition: border-color 300ms ease-in-out;
+  outline: none;
+}
+
+.input-light:focus {
+  border-color: #6B7280;
+}
+
+.input-light::placeholder {
+  color: #9CA3AF;
+}
+
+/* Hero-context ghost button (light text for dark hero) */
+.btn-ghost-light {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 36px;
+  background-color: transparent;
+  color: #F5F0E8;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  font-family: var(--font-inter);
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transition: all 300ms ease-in-out;
+  cursor: pointer;
+}
+
+.btn-ghost-light:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  color: #FFFFFF;
+}
+
+/* Hero primary CTA (silver-white on dark) */
+.btn-hero {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 36px;
+  background-color: #FFFFFF;
+  color: #1C1C1E;
+  font-family: var(--font-inter);
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transition: all 300ms ease-in-out;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-hero:hover {
+  background-color: #D1D5DB;
+  transform: translateY(-1px);
+}
