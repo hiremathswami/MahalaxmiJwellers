@@ -153,3 +153,31 @@ CREATE POLICY "Admin full access profiles"
   ON profiles FOR ALL USING (auth.role() = 'authenticated');
 
 
+-- Events table
+CREATE TABLE events (
+  id            UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  title         TEXT NOT NULL,
+  description   TEXT,
+  image_url     TEXT NOT NULL,
+  link_url      TEXT,
+  is_active     BOOLEAN DEFAULT true,
+  created_at    TIMESTAMPTZ DEFAULT now(),
+  updated_at    TIMESTAMPTZ DEFAULT now()
+);
+
+-- Enable RLS
+ALTER TABLE events ENABLE ROW LEVEL SECURITY;
+
+-- Policies
+CREATE POLICY "Public read events"
+  ON events FOR SELECT USING (is_active = true);
+
+CREATE POLICY "Admin full access events"
+  ON events FOR ALL USING (auth.role() = 'authenticated');
+
+-- Trigger to auto-update updated_at
+CREATE TRIGGER set_updated_at_events
+  BEFORE UPDATE ON events
+  FOR EACH ROW EXECUTE FUNCTION update_updated_at();
+
+
