@@ -1,6 +1,6 @@
 export async function POST(req) {
   try {
-    const { phone, type = 'voice' } = await req.json();
+    const { phone } = await req.json();
     // Normalize phone number (strip +91 prefix or whitespace for validation)
     const normalizedPhone = phone.replace(/^\+91/, '').replace(/\s+/g, '').trim();
 
@@ -15,28 +15,18 @@ export async function POST(req) {
       return Response.json({ sessionId: mockSessionId, isMock: true });
     }
 
-    // Try Voice OTP endpoint first (does not require DLT registration) or SMS endpoint based on type
-    const endpointType = type === 'sms' ? 'SMS' : 'VOICE';
-    let res = await fetch(
-      `https://2factor.in/API/V1/${apiKey}/${endpointType}/+91${normalizedPhone}/AUTOGEN`
+    // Send SMS OTP via 2Factor SMS Gateway API
+    const res = await fetch(
+      `https://2factor.in/API/V1/${apiKey}/SMS/+91${normalizedPhone}/AUTOGEN`
     );
-    let data = await res.json();
-
-    // Fallback: If SMS fails (e.g. DLT template pending), automatically try Voice Call OTP
-    if (data.Status !== "Success" && endpointType === 'SMS') {
-      console.warn("[2Factor SMS failed, falling back to VOICE OTP]:", data);
-      res = await fetch(
-        `https://2factor.in/API/V1/${apiKey}/VOICE/+91${normalizedPhone}/AUTOGEN`
-      );
-      data = await res.json();
-    }
+    const data = await res.json();
 
     if (data.Status !== "Success") {
-      console.error("[2Factor send error]:", data);
-      return Response.json({ error: data.Details || "Failed to send OTP. Please try again." }, { status: 500 });
+      console.error("[2Factor SMS send error]:", data);
+      return Response.json({ error: data.Details || "Failed to send SMS OTP. Please verify phone number or SMS credits." }, { status: 500 });
     }
 
-    return Response.json({ sessionId: data.Details, isVoice: endpointType === 'VOICE' || data.Status === 'Success' });
+    return Response.json({ sessionId: data.Details, isSms: true });
   } catch (err) {
     console.error('Error in send-otp API:', err);
     return Response.json({ error: 'Internal Server Error' }, { status: 500 });

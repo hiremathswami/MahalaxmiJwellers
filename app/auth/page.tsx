@@ -322,10 +322,8 @@ function AuthPageContent() {
       
       if (data.isMock) {
         setOtpAlertMessage(`OTP sent successfully! (For testing, enter code: 123456)`);
-      } else if (data.isVoice) {
-        setOtpAlertMessage(`📞 You will receive an automated phone call on +91${regPhone} delivering your 6-digit OTP code!`);
       } else {
-        setOtpAlertMessage(`📱 OTP sent successfully to your mobile number!`);
+        setOtpAlertMessage(`📱 SMS OTP sent successfully to +91${regPhone}! Please check your text messages.`);
       }
     } catch (err: any) {
       alert(err.message || 'Error sending OTP');
