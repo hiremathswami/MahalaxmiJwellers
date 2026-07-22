@@ -76,6 +76,7 @@ export default function HomePage() {
         if (data.success && data.products) {
           const mappedDb = data.products.map((p: any) => ({
             ...p,
+            slug: p.slug || p.name.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
             isBestSeller: !!p.is_bestseller
           }));
           // Merge: DB products take priority, add static ones that aren't in DB

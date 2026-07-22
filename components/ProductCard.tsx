@@ -15,6 +15,7 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
   const addToCart = useCartStore((state) => state.addItem);
   const { isInWishlist, toggleItem } = useWishlistStore();
   const wishlisted = isInWishlist(product.id);
+  const safeSlug = product.slug || (product.name ? product.name.toLowerCase().replace(/[^a-z0-9]+/g, '-') : product.id);
 
   return (
     <motion.div
@@ -52,7 +53,7 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
             e.preventDefault();
             toggleItem(product);
           }}
-          className="absolute top-4 right-4 z-10 w-9 h-9 flex items-center justify-center bg-white/80 hover:bg-white transition-all duration-300 rounded-full shadow-sm"
+          className="absolute top-4 right-4 z-10 w-9 h-9 flex items-center justify-center bg-white/80 hover:bg-white transition-all duration-300 rounded-full shadow-sm cursor-pointer"
           aria-label={wishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
           id={`wishlist-toggle-${product.id}`}
         >
@@ -82,7 +83,7 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
 
         {/* Quick view on hover */}
         <Link
-          href={`/shop/${product.slug}`}
+          href={`/shop/${safeSlug}`}
           className="absolute inset-0 bg-charcoal/0 group-hover:bg-charcoal/10 transition-all duration-500 flex items-center justify-center"
         >
           <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-charcoal text-xs uppercase tracking-[0.15em] border border-charcoal/30 bg-white/90 px-5 py-2.5 hover:bg-charcoal hover:text-white">
@@ -94,9 +95,9 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
       {/* Product Info */}
       <div className="space-y-2">
         <p className="text-warm-gray text-[10px] uppercase tracking-[0.15em]">
-          {product.metal} · {product.stone}
+          {product.metal || '925 Silver'} · {product.stone || 'Pure'}
         </p>
-        <Link href={`/shop/${product.slug}`}>
+        <Link href={`/shop/${safeSlug}`}>
           <h3 className="font-cormorant text-lg text-charcoal group-hover:text-silver-dark transition-colors duration-300">
             {product.name}
           </h3>
