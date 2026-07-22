@@ -8,7 +8,7 @@ export async function POST(req) {
       return Response.json({ error: "Invalid Indian phone number. Please enter a valid 10-digit mobile number." }, { status: 400 });
     }
 
-    const apiKey = process.env.TWO_FACTOR_API_KEY;
+    const apiKey = process.env.TWO_FACTOR_API_KEY || process.env.mahalaxmi_TWO_FACTOR_API_KEY || 'fa3fb071-85a9-11f1-908b-0200cd936042';
     if (!apiKey) {
       // Mock OTP flow if API key is not configured (allows developer testing)
       console.warn("TWO_FACTOR_API_KEY is not defined. Falling back to mock OTP (code: 123456).");

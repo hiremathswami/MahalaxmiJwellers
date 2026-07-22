@@ -10,7 +10,7 @@ export async function POST(req) {
       return Response.json({ verified: false, error: "Incorrect or expired OTP" }, { status: 400 });
     }
 
-    const apiKey = process.env.TWO_FACTOR_API_KEY;
+    const apiKey = process.env.TWO_FACTOR_API_KEY || process.env.mahalaxmi_TWO_FACTOR_API_KEY || 'fa3fb071-85a9-11f1-908b-0200cd936042';
     if (!apiKey) {
       return Response.json({ error: "SMS Provider API Key is not configured." }, { status: 500 });
     }
