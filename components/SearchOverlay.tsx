@@ -29,11 +29,14 @@ export default function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
 
   // Fetch database products on open
   useEffect(() => {
+    let isMounted = true;
     if (isOpen && allProducts.length === 0) {
-      setLoading(true);
-      fetch('/api/products?limit=200')
-        .then(res => res.json())
-        .then(data => {
+      const loadProducts = async () => {
+        setLoading(true);
+        try {
+          const res = await fetch('/api/products?limit=200');
+          const data = await res.json();
+          if (!isMounted) return;
           if (data.success && data.products) {
             const dbProducts: SearchProduct[] = data.products.map((p: any) => ({
               id: p.id,
@@ -46,7 +49,6 @@ export default function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
               images: p.images || [],
             }));
 
-            // Merge: DB products take priority, add static ones that aren't in DB
             const dbIds = new Set(dbProducts.map(p => p.id));
             const dbSlugs = new Set(dbProducts.map(p => p.slug));
             const merged = [
@@ -64,7 +66,6 @@ export default function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
             ];
             setAllProducts(merged);
           } else {
-            // Fallback to static only
             setAllProducts(staticProducts.map(p => ({
               id: p.id,
               name: p.name,
@@ -76,22 +77,31 @@ export default function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
               images: p.images || [],
             })));
           }
-        })
-        .catch(() => {
-          setAllProducts(staticProducts.map(p => ({
-            id: p.id,
-            name: p.name,
-            slug: p.slug,
-            category: p.category,
-            metal: p.metal,
-            stone: p.stone,
-            price: p.price,
-            images: p.images || [],
-          })));
-        })
-        .finally(() => setLoading(false));
+        } catch {
+          if (isMounted) {
+            setAllProducts(staticProducts.map(p => ({
+              id: p.id,
+              name: p.name,
+              slug: p.slug,
+              category: p.category,
+              metal: p.metal,
+              stone: p.stone,
+              price: p.price,
+              images: p.images || [],
+            })));
+          }
+        } finally {
+          if (isMounted) setLoading(false);
+        }
+      };
+
+      loadProducts();
     }
-  }, [isOpen]);
+
+    return () => {
+      isMounted = false;
+    };
+  }, [isOpen, allProducts.length]);
 
   const filteredProducts = query.length > 1
     ? allProducts.filter(
@@ -107,19 +117,23 @@ export default function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
 
   useEffect(() => {
     if (isOpen) {
-      setTimeout(() => inputRef.current?.focus(), 100);
-    } else {
-      setQuery('');
+      const timer = setTimeout(() => inputRef.current?.focus(), 100);
+      return () => clearTimeout(timer);
     }
   }, [isOpen]);
 
+  const handleClose = () => {
+    setQuery('');
+    onClose();
+  };
+
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
+      if (e.key === 'Escape') handleClose();
     };
     window.addEventListener('keydown', handleEsc);
     return () => window.removeEventListener('keydown', handleEsc);
-  }, [onClose]);
+  }, []);
 
   return (
     <AnimatePresence>
@@ -133,7 +147,7 @@ export default function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
           id="search-overlay"
         >
           <button
-            onClick={onClose}
+            onClick={handleClose}
             className="absolute top-8 right-8 text-charcoal/60 hover:text-charcoal transition-colors"
             aria-label="Close search"
             id="search-close-btn"

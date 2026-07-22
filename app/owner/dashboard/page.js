@@ -48,15 +48,27 @@ export default function OwnerDashboard({ setTitle }) {
     if (!accessToken) return;
     try {
       setLoading(true);
-      const [ordersRes, productsRes, customRes] = await Promise.all([
+      setError('');
+      const [ordersResult, productsResult, customResult] = await Promise.allSettled([
         getOrders(accessToken),
         getProducts(accessToken, { limit: 100 }),
         getCustomRequests(accessToken)
       ]);
 
-      if (ordersRes.success) setOrders(ordersRes.orders || []);
-      if (productsRes.success) setProducts(productsRes.products || []);
-      if (customRes.success) setCustomRequests(customRes.requests || []);
+      if (ordersResult.status === 'fulfilled' && ordersResult.value.success) {
+        setOrders(ordersResult.value.orders || []);
+      }
+      if (productsResult.status === 'fulfilled' && productsResult.value.success) {
+        setProducts(productsResult.value.products || []);
+      }
+      if (customResult.status === 'fulfilled' && customResult.value.success) {
+        setCustomRequests(customResult.value.requests || []);
+      }
+
+      // Only set error if all three failed
+      if (ordersResult.status === 'rejected' && productsResult.status === 'rejected' && customResult.status === 'rejected') {
+        setError('Failed to fetch dashboard data. Please verify your connection and permissions.');
+      }
     } catch (err) {
       console.error('Error fetching dashboard data:', err);
       setError('Failed to fetch dashboard data. Please try again.');

@@ -135,11 +135,11 @@ export default function HomePage() {
 
   /* ── Category highlights ── */
   const categories = [
-    { label: 'Rings', count: dbProducts.filter((p) => p.category?.toLowerCase() === 'rings').length, href: '/shop?category=Rings', image: '/images/products/ring-2.jpg' },
-    { label: 'Necklaces', count: dbProducts.filter((p) => p.category?.toLowerCase() === 'necklaces').length, href: '/shop?category=Necklaces', image: '/images/products/necklace-1.jpg' },
-    { label: 'Earrings', count: dbProducts.filter((p) => p.category?.toLowerCase() === 'earrings').length, href: '/shop?category=Earrings', image: '/images/products/earring-1.jpg' },
-    { label: 'Bangles', count: dbProducts.filter((p) => p.category?.toLowerCase() === 'bangles').length, href: '/shop?category=Bangles', image: '/images/products/bangle-1.jpg' },
-    { label: 'Pendants', count: dbProducts.filter((p) => p.category?.toLowerCase() === 'pendants').length, href: '/shop?category=Pendants', image: '/images/products/pendant-1.jpg' },
+    { label: 'Rings', count: dbProducts.filter((p) => p.category?.toLowerCase() === 'rings').length, href: '/shop?category=rings', image: '/images/products/ring-2.jpg' },
+    { label: 'Necklaces', count: dbProducts.filter((p) => p.category?.toLowerCase() === 'necklaces').length, href: '/shop?category=necklaces', image: '/images/products/necklace-1.jpg' },
+    { label: 'Earrings', count: dbProducts.filter((p) => p.category?.toLowerCase() === 'earrings').length, href: '/shop?category=earrings', image: '/images/products/earring-1.jpg' },
+    { label: 'Bangles', count: dbProducts.filter((p) => p.category?.toLowerCase() === 'bangles' || p.category?.toLowerCase() === 'bracelets').length, href: '/shop?category=bangles', image: '/images/products/bangle-1.jpg' },
+    { label: 'Pendants', count: dbProducts.filter((p) => p.category?.toLowerCase() === 'pendants').length, href: '/shop?category=pendants', image: '/images/products/pendant-1.jpg' },
   ];
 
   /* ── Stats ── */

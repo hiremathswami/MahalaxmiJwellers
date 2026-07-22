@@ -78,7 +78,7 @@ function OwnerProductsPageContent({ setTitle }) {
   };
 
   // Categories list
-  const categoriesList = ['All', 'Rings', 'Necklaces', 'Earrings', 'Bangles', 'Pendants'];
+  const categoriesList = ['All', 'Rings', 'Necklaces', 'Earrings', 'Bracelets', 'Bangles', 'Pendants', 'Anklets', 'Custom'];
 
   // Filter & Search Logic
   const filteredProducts = products.filter(p => {

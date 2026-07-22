@@ -29,8 +29,16 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
         <div className="w-full h-full relative group-hover:scale-105 transition-transform duration-500">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={product.images[0]}
+            src={
+              product.images && product.images[0] && product.images[0].length > 0
+                ? product.images[0]
+                : '/images/products/ring-2.jpg'
+            }
             alt={product.name}
+            onError={(e) => {
+              // Fallback on image load error
+              (e.currentTarget as HTMLImageElement).src = '/images/products/ring-2.jpg';
+            }}
             className="w-full h-full object-cover"
           />
         </div>

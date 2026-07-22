@@ -8,9 +8,21 @@ import ProductCard from '@/components/ProductCard';
 import PromoBanner from '@/components/PromoBanner';
 import { products } from '@/data/products';
 
-const categories = ['All', 'Rings', 'Necklaces', 'Earrings', 'Bangles', 'Pendants'] as const;
-const metals = ['All', '925 Sterling Silver', 'Oxidized Sterling Silver', 'Platinum-Plated Silver', 'Rhodium-Plated Silver', 'Platinum'] as const;
+const categories = ['All', 'Rings', 'Necklaces', 'Earrings', 'Bracelets', 'Bangles', 'Pendants', 'Anklets', 'Custom'] as const;
+const metals = ['All', '925 Sterling Silver', 'Oxidized Sterling Silver', 'Platinum-Plated Silver', 'Rhodium-Plated Silver', 'Platinum', 'Silver', 'Brass'] as const;
 const stones = ['All', 'Diamond', 'Ruby', 'Emerald', 'Sapphire'] as const;
+
+// Default category images fallback mapping
+const categoryDefaultImages: Record<string, string> = {
+  rings: '/images/products/ring-2.jpg',
+  necklaces: '/images/products/necklace-1.jpg',
+  earrings: '/images/products/earring-1.jpg',
+  bracelets: '/images/products/bangle-1.jpg',
+  bangles: '/images/products/bangle-1.jpg',
+  pendants: '/images/products/pendant-1.jpg',
+  anklets: '/images/products/bangle-2.jpg',
+  custom: '/images/products/set-1.jpg',
+};
 
 function ShopPageContent() {
   const searchParams = useSearchParams();
@@ -19,29 +31,44 @@ function ShopPageContent() {
   const [selectedStone, setSelectedStone] = useState<string>('All');
   const [selectedGender, setSelectedGender] = useState<string>('All');
   const [sortBy] = useState<string>('Latest');
-  const [priceRange] = useState<[number, number]>([0, 400000]);
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 1000000]);
   const [allProducts, setAllProducts] = useState<any[]>(products);
 
   // Load products from Supabase API on page load
   useEffect(() => {
-    fetch('/api/products?limit=100')
+    fetch('/api/products?limit=200')
       .then((res) => res.json())
       .then((data) => {
         if (data.success && data.products && data.products.length > 0) {
-          const mapped = data.products.map((p: any) => ({
-            ...p,
-            originalPrice: p.original_price,
-            inStock: p.stock > 0,
-            isBestSeller: !!p.is_bestseller,
-            slug: p.slug || p.name.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
-            details: p.details || {
-              productDetails: p.description || '',
-              hallmark: '925 Hallmarked Sterling Silver.',
-              delivery: 'Complimentary insured shipping within India.',
-              care: 'Avoid contact with perfumes and chemicals.'
-            }
-          }));
-          setAllProducts(mapped);
+          const dbProducts = data.products.map((p: any) => {
+            const catKey = (p.category || 'rings').toLowerCase();
+            const fallbackImg = categoryDefaultImages[catKey] || '/images/products/ring-2.jpg';
+            const validImages = Array.isArray(p.images) && p.images.length > 0 ? p.images : [fallbackImg];
+
+            return {
+              ...p,
+              originalPrice: p.original_price,
+              inStock: p.stock > 0,
+              isBestSeller: !!p.is_bestseller,
+              slug: p.slug || p.name.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+              images: validImages,
+              details: p.details || {
+                productDetails: p.description || '',
+                hallmark: '925 Hallmarked Sterling Silver.',
+                delivery: 'Complimentary insured shipping within India.',
+                care: 'Avoid contact with perfumes and chemicals.'
+              }
+            };
+          });
+
+          // Merge: DB products take priority, add static ones that aren't in DB
+          const dbIds = new Set(dbProducts.map((p: any) => p.id));
+          const dbSlugs = new Set(dbProducts.map((p: any) => p.slug));
+          const merged = [
+            ...dbProducts,
+            ...products.filter((p) => !dbIds.has(p.id) && !dbSlugs.has(p.slug))
+          ];
+          setAllProducts(merged);
         }
       })
       .catch((err) => console.warn('Could not load DB products, using fallback:', err));
@@ -52,37 +79,52 @@ function ShopPageContent() {
     const category = searchParams.get('category');
     if (category) {
       const matched = categories.find((c) => c.toLowerCase() === category.toLowerCase());
-      if (matched) setSelectedCategory(matched);
+      setSelectedCategory(matched || 'All');
     } else {
       setSelectedCategory('All');
     }
+
     const metal = searchParams.get('metal');
     if (metal) {
       const matched = metals.find((m) => m.toLowerCase() === metal.toLowerCase());
-      if (matched) setSelectedMetal(matched);
+      setSelectedMetal(matched || 'All');
     } else {
       setSelectedMetal('All');
     }
+
     const stone = searchParams.get('stone');
     if (stone) {
       const matched = stones.find((s) => s.toLowerCase() === stone.toLowerCase());
-      if (matched) setSelectedStone(matched);
+      setSelectedStone(matched || 'All');
     } else {
       setSelectedStone('All');
     }
+
     const gender = searchParams.get('gender');
     if (gender) {
       setSelectedGender(gender.toLowerCase());
     } else {
       setSelectedGender('All');
     }
+
+    const minPrice = searchParams.get('minPrice');
+    const maxPrice = searchParams.get('maxPrice');
+    const min = minPrice ? Number(minPrice) : 0;
+    const max = maxPrice ? Number(maxPrice) : 1000000;
+    setPriceRange([min, max]);
   }, [searchParams]);
 
   const filteredProducts = useMemo(() => {
     let result = [...allProducts];
-    if (selectedCategory !== 'All') result = result.filter((p) => p.category?.toLowerCase() === selectedCategory.toLowerCase());
-    if (selectedMetal !== 'All') result = result.filter((p) => p.metal?.toLowerCase() === selectedMetal.toLowerCase());
-    if (selectedStone !== 'All') result = result.filter((p) => p.stone?.toLowerCase() === selectedStone.toLowerCase());
+    if (selectedCategory !== 'All') {
+      result = result.filter((p) => p.category?.toLowerCase() === selectedCategory.toLowerCase());
+    }
+    if (selectedMetal !== 'All') {
+      result = result.filter((p) => p.metal?.toLowerCase() === selectedMetal.toLowerCase() || p.metal?.toLowerCase().includes(selectedMetal.toLowerCase()));
+    }
+    if (selectedStone !== 'All') {
+      result = result.filter((p) => p.stone?.toLowerCase() === selectedStone.toLowerCase());
+    }
     if (selectedGender !== 'All') {
       result = result.filter((p) => {
         const nameMatch = p.name.toLowerCase().includes("men") || p.name.toLowerCase().includes("kada") || p.name.toLowerCase().includes("curb");
@@ -95,7 +137,7 @@ function ShopPageContent() {
     switch (sortBy) {
       case 'Price: Low to High': result.sort((a, b) => a.price - b.price); break;
       case 'Price: High to Low': result.sort((a, b) => b.price - a.price); break;
-      default: result.sort((a, b) => (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0));
+      default: result.sort((a, b) => (b.isBestSeller ? 1 : 0) - (a.isBestSeller ? 1 : 0));
     }
     return result;
   }, [allProducts, selectedCategory, selectedMetal, selectedStone, selectedGender, sortBy, priceRange]);
