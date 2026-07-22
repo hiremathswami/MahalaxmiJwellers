@@ -461,9 +461,9 @@ export default function HomePage() {
             {/* Left — image */}
             <div className="relative h-[50vh] sm:h-[60vh] lg:h-auto overflow-hidden">
               <img
-                src="/images/products/necklace-1.jpg"
+                src="/uploads/1783760271770-Diamond_pendant_on_marble_2K_202607111424.jpeg"
                 alt="Premium Curated Jewellery"
-                className="w-full h-full object-cover opacity-70 hover:opacity-90 transition-opacity duration-700"
+                className="w-full h-full object-cover opacity-80 hover:opacity-95 transition-opacity duration-700"
               />
               <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[#0A0A0A]/60 hidden lg:block" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-transparent lg:hidden" />

@@ -320,6 +320,35 @@ export const products: Product[] = [
       care: 'Store in the provided anti-tarnish pouch. Polish with a jewellery cloth monthly. Avoid bending.',
     },
   },
+  {
+    id: '13',
+    slug: 'gold-plated-925-silver-lakshmi-nakshi-necklace',
+    name: 'Gold Plated 925 Silver Lakshmi Nakshi Necklace',
+    price: 20000,
+    category: 'Necklaces',
+    metal: 'Gold Plated 925 Silver',
+    stone: 'Semi Precious Pink & Emerald CZ',
+    weight: '56.5g',
+    images: [
+      '/uploads/1784046219328-Gold_deity_necklace_on_stand_202607142150.jpeg',
+      '/uploads/1784046219305-Deity_pendant_on_gold_necklace_202607142150.jpeg',
+      '/uploads/1784046219284-Gold_necklace_on_white_silk_202607142150.jpeg',
+      '/uploads/1784046219317-Gold_necklace_on_marble_surface_202607142150.jpeg'
+    ],
+    rating: 5.0,
+    reviewCount: 48,
+    inStock: true,
+    isNew: true,
+    isBestSeller: true,
+    collectionId: 'bridal-heritage',
+    description: 'Measurements : Total length of the Neckpiece 24Cm & Width 2.5Cm Approx. Pendant Length 8cm & Width 6.5cm With including Green Beads & Water pearls. Stones / Pearls : Semi Precious Pink & Emerald CZ cab Cut Stones & Fresh Water Pearls & Green beads. Stones Color : Pink & Green Beads & White Pearls. Weight : 56.5grams Approx. Closure : Necklace comes with Adjustable Thread.',
+    details: {
+      productDetails: 'Measurements : Total length of the Neckpiece 24Cm & Width 2.5Cm Approx. Pendant Length 8cm & Width 6.5cm With including Green Beads & Water pearls. Stones / Pearls : Semi Precious Pink & Emerald CZ cab Cut Stones & Fresh Water Pearls & Green beads. Stones Color : Pink & Green Beads & White Pearls. Weight : 56.5grams Approx. Closure : Necklace comes with Adjustable Thread.',
+      hallmark: '925 Hallmarked Sterling Silver. Certified Craftsmanship.',
+      delivery: 'Complimentary insured shipping within India.',
+      care: 'Avoid direct contact with perfumes, hairsprays, and harsh chemicals.',
+    },
+  },
 ];
 
 export function getProductBySlug(slug: string): Product | undefined {
