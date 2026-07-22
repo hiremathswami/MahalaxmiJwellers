@@ -30,14 +30,17 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={
-              product.images && product.images[0] && product.images[0].length > 0
-                ? product.images[0]
+              product.images && Array.isArray(product.images) && product.images.find(img => !!img && img.trim() !== '')
+                ? (product.images.find(img => !!img && img.trim() !== '') as string)
                 : '/images/products/ring-2.jpg'
             }
             alt={product.name}
             onError={(e) => {
-              // Fallback on image load error
-              (e.currentTarget as HTMLImageElement).src = '/images/products/ring-2.jpg';
+              const target = e.currentTarget as HTMLImageElement;
+              if (!target.dataset.fallbackTried) {
+                target.dataset.fallbackTried = 'true';
+                target.src = '/images/products/ring-2.jpg';
+              }
             }}
             className="w-full h-full object-cover"
           />
