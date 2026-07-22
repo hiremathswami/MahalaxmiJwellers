@@ -10,14 +10,14 @@ export default function WhatsAppButton() {
     <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3">
       {/* Floating Tooltip Pill */}
       <span
-        className={`hidden sm:inline-block bg-[#121212] text-white text-xs font-semibold px-3.5 py-2 rounded-full shadow-xl border border-white/10 transition-all duration-300 ${
+        className={`hidden sm:inline-block bg-white text-charcoal text-[11px] font-bold px-3.5 py-2 rounded-full shadow-[0_4px_15px_rgba(0,0,0,0.12)] border border-gray-100 transition-all duration-300 ${
           isHovered ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-2 pointer-events-none'
         }`}
       >
-        Need Help? Chat with Us 💬
+        Chat on WhatsApp
       </span>
 
-      {/* WhatsApp Icon Button */}
+      {/* WhatsApp Icon Button (Shaya / CaratLane style) */}
       <a
         href={whatsappUrl}
         target="_blank"
@@ -26,14 +26,11 @@ export default function WhatsAppButton() {
         onMouseLeave={() => setIsHovered(false)}
         aria-label="Chat on WhatsApp"
         id="whatsapp-floating-btn"
-        className="relative group w-14 h-14 bg-[#25D366] hover:bg-[#20bd5a] text-white rounded-full flex items-center justify-center shadow-[0_6px_25px_rgba(37,211,102,0.5)] hover:shadow-[0_8px_30px_rgba(37,211,102,0.7)] transition-all duration-300 hover:scale-110 active:scale-95"
+        className="w-13 h-13 sm:w-14 sm:h-14 bg-[#25D366] hover:bg-[#20bd5a] text-white rounded-full flex items-center justify-center shadow-[0_4px_16px_rgba(37,211,102,0.4)] hover:shadow-[0_6px_22px_rgba(37,211,102,0.6)] transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer"
       >
-        {/* Pulsing ring around button */}
-        <span className="absolute inset-0 rounded-full bg-[#25D366] opacity-75 animate-ping group-hover:animate-none pointer-events-none" />
-
-        {/* Official WhatsApp SVG Icon */}
+        {/* Clean WhatsApp Icon */}
         <svg
-          className="w-7 h-7 fill-current relative z-10 drop-shadow"
+          className="w-7 h-7 fill-current"
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
         >
