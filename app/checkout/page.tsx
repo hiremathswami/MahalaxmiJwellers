@@ -39,8 +39,8 @@ export default function CheckoutPage() {
   // Step 2: Shipping
   const [shippingMethod, setShippingMethod] = useState('standard');
 
-  // Step 3: Payment
-  const [paymentMethod, setPaymentMethod] = useState('upi');
+  // Step 3: Payment (COD default)
+  const [paymentMethod, setPaymentMethod] = useState('cod');
   const [upiId, setUpiId] = useState('');
 
   // Card details
@@ -445,16 +445,16 @@ export default function CheckoutPage() {
               >
                 <h2 className="font-cormorant text-2xl text-charcoal mb-6">Payment Method</h2>
                 {[
-                  { id: 'upi', label: 'UPI', desc: 'Pay using Google Pay, PhonePe, or any UPI app' },
-                  { id: 'card', label: 'Credit / Debit Card', desc: 'Visa, Mastercard, Rupay' },
-                  { id: 'netbanking', label: 'Net Banking', desc: 'All major banks supported' },
-                  { id: 'cod', label: 'Cash on Delivery', desc: 'Pay when your order arrives' },
+                  { id: 'cod', label: 'Cash on Delivery (Recommended)', desc: 'Pay with cash or UPI upon delivery. Safe and hassle-free.', active: true },
+                  { id: 'online', label: 'Online Payment (Razorpay)', desc: 'Temporarily unavailable for maintenance. Please select Cash on Delivery.', active: false },
                 ].map((method) => (
                   <label
                     key={method.id}
-                    className={`flex items-center gap-4 p-6 border cursor-pointer transition-all duration-300 rounded-xl ${
+                    className={`flex items-center gap-4 p-6 border transition-all duration-300 rounded-xl ${
+                      method.active ? 'cursor-pointer' : 'cursor-not-allowed opacity-60'
+                    } ${
                       paymentMethod === method.id
-                        ? 'border-charcoal bg-champagne'
+                        ? 'border-charcoal bg-champagne shadow-sm'
                         : 'border-gray-200 hover:border-gray-300 bg-white'
                     }`}
                   >
@@ -463,16 +463,24 @@ export default function CheckoutPage() {
                     }`}>
                       {paymentMethod === method.id && <div className="w-2.5 h-2.5 rounded-full bg-charcoal" />}
                     </div>
-                    <div>
-                      <p className="text-charcoal font-medium">{method.label}</p>
-                      <p className="text-warm-gray text-sm">{method.desc}</p>
+                    <div className="flex-1">
+                      <div className="flex items-center justify-between">
+                        <p className="text-charcoal font-medium">{method.label}</p>
+                        {!method.active && (
+                          <span className="text-[10px] uppercase font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-md border border-amber-200">
+                            Temporarily Paused
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-warm-gray text-sm mt-0.5">{method.desc}</p>
                     </div>
                     <input
                       type="radio"
                       name="payment"
                       value={method.id}
+                      disabled={!method.active}
                       checked={paymentMethod === method.id}
-                      onChange={() => setPaymentMethod(method.id)}
+                      onChange={() => method.active && setPaymentMethod(method.id)}
                       className="sr-only"
                     />
                   </label>
