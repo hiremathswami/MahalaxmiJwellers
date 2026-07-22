@@ -461,9 +461,9 @@ export default function HomePage() {
             {/* Left — image */}
             <div className="relative h-[50vh] sm:h-[60vh] lg:h-auto overflow-hidden">
               <img
-                src="/uploads/1783760271770-Diamond_pendant_on_marble_2K_202607111424.jpeg"
-                alt="Premium Curated Jewellery"
-                className="w-full h-full object-cover opacity-80 hover:opacity-95 transition-opacity duration-700"
+                src="/uploads/1784046219328-Gold_deity_necklace_on_stand_202607142150.jpeg"
+                alt="Lakshmi Nakshi Necklace"
+                className="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-700"
               />
               <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[#0A0A0A]/60 hidden lg:block" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-transparent lg:hidden" />
@@ -477,22 +477,20 @@ export default function HomePage() {
                     The Art of Adornment
                   </span>
                   <h2 className="font-cormorant text-4xl sm:text-5xl lg:text-6xl text-white font-bold leading-[1.1] mb-6 sm:mb-8">
-                    Curated for
+                    Lakshmi Nakshi
                     <br />
-                    Eternity
+                    Necklace
                   </h2>
-                  <p className="text-white/50 text-sm sm:text-base leading-relaxed mb-8 sm:mb-10 max-w-md">
-                    Each piece in our catalog is handpicked for its impeccable finish, 
-                    refined design, and exceptional value. We partner with elite global 
-                    designers to bring you collections that represent the pinnacle of modern luxury.
+                  <p className="text-white/70 text-sm sm:text-base leading-relaxed mb-8 sm:mb-10 max-w-md">
+                    Gold Plated 925 Sterling Silver Lakshmi Nakshi Necklace handcrafted with semi-precious pink & emerald CZ cab cut stones, freshwater pearls, and divine nakshi craftsmanship.
                   </p>
 
                   <div className="flex flex-col sm:flex-row gap-4">
                     <Link
-                      href="/about"
-                      className="px-8 py-3.5 bg-white text-charcoal text-xs sm:text-[13px] font-semibold uppercase tracking-[0.15em] hover:bg-gray-200 transition-all duration-300 text-center"
+                      href="/shop/gold-plated-925-silver-lakshmi-nakshi-necklace"
+                      className="px-8 py-3.5 bg-white text-charcoal text-xs sm:text-[13px] font-bold uppercase tracking-[0.15em] hover:bg-gray-200 transition-all duration-300 text-center rounded-full shadow-md"
                     >
-                      Our Story
+                      View Lakshmi Necklace
                     </Link>
                   </div>
                 </div>
