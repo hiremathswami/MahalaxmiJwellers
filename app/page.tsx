@@ -517,12 +517,14 @@ export default function HomePage() {
           </Reveal>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            {products
-              .filter((p) => p.isBestSeller)
+            {(dbProducts.filter((p) => p.isBestSeller || p.is_bestseller).length > 0
+              ? dbProducts.filter((p) => p.isBestSeller || p.is_bestseller)
+              : dbProducts
+            )
               .slice(0, 3)
               .map((product, i) => (
                 <Reveal key={product.id} delay={i * 0.1}>
-                  <div className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-5 shadow-lg">
+                  <div className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-5 shadow-lg text-charcoal">
                     <ProductCard product={product} index={i} />
                   </div>
                 </Reveal>
