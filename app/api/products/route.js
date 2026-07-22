@@ -38,20 +38,20 @@ export async function GET(request) {
     }
 
     const processedProducts = (products || []).map(p => {
-      let is_bestseller = false;
-      let metal = '';
-      let stone = '';
-      let gender = '';
+      let is_bestseller = !!p.is_bestseller;
+      let metal = p.metal || '';
+      let stone = p.stone || '';
+      let gender = p.gender || '';
       let descText = p.description || '';
       
       if (p.description && p.description.trim().startsWith('{')) {
         try {
           const parsed = JSON.parse(p.description);
           descText = parsed.text || '';
-          is_bestseller = !!parsed.is_bestseller;
-          metal = parsed.metal || '';
-          stone = parsed.stone || '';
-          gender = parsed.gender || '';
+          if (parsed.is_bestseller !== undefined) is_bestseller = !!parsed.is_bestseller;
+          if (parsed.metal) metal = parsed.metal;
+          if (parsed.stone) stone = parsed.stone;
+          if (parsed.gender) gender = parsed.gender;
         } catch (e) {
           // Fallback
         }
@@ -60,6 +60,7 @@ export async function GET(request) {
         ...p,
         description: descText,
         is_bestseller,
+        isBestSeller: is_bestseller,
         metal,
         stone,
         gender

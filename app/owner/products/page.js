@@ -224,7 +224,14 @@ function OwnerProductsPageContent({ setTitle }) {
                             />
                           )}
                           <div>
-                            <span className="font-bold text-gray-950 text-sm block tracking-wide">{p.name}</span>
+                            <div className="flex items-center gap-2">
+                              <span className="font-bold text-gray-950 text-sm block tracking-wide">{p.name}</span>
+                              {(p.is_bestseller || p.isBestSeller) && (
+                                <span className="inline-flex items-center gap-1 text-[9px] font-extrabold uppercase tracking-wider text-amber-800 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-full shadow-2xs">
+                                  ★ Bestseller
+                                </span>
+                              )}
+                            </div>
                             <span className="text-[10px] text-gray-400 font-mono block mt-0.5">ID: {p.id}</span>
                           </div>
                         </div>

@@ -49,6 +49,7 @@ export async function GET(request, { params }) {
         ...product,
         description: descText,
         is_bestseller,
+        isBestSeller: is_bestseller,
         metal,
         stone,
         gender
