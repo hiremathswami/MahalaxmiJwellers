@@ -33,9 +33,9 @@ const dropdownData: Record<string, {
   'Earrings': {
     title: 'Earrings',
     items: [
-      { label: 'Jhumkas & Studs', image: 'https://images.unsplash.com/photo-1630019852942-f89202989a59?auto=format&fit=crop&w=400&q=80', path: '/shop?category=earrings' },
-      { label: 'Hoops & Huggies', image: 'https://images.unsplash.com/photo-1635767798638-3e25273a8236?auto=format&fit=crop&w=400&q=80', path: '/shop?category=earrings' },
-      { label: 'Ear Cuffs', image: 'https://images.unsplash.com/photo-1603561591411-07134e71a2a9?auto=format&fit=crop&w=400&q=80', path: '/shop?category=earrings' },
+      { label: 'Jhumkas & Studs', image: '/images/products/earring-1.jpg', path: '/shop?category=earrings' },
+      { label: 'Hoops & Huggies', image: '/images/products/earring-2.jpg', path: '/shop?category=earrings' },
+      { label: 'Ear Cuffs', image: '/images/products/earring-1.jpg', path: '/shop?category=earrings' },
     ],
     curated: ['Everyday Studs', 'Statement Jhumkas', 'Silver Hoops', 'Gold Ear Cuffs', 'Earrings Under 2K'],
     pricePath: '/shop?category=earrings'
@@ -43,9 +43,9 @@ const dropdownData: Record<string, {
   'Necklaces': {
     title: 'Necklaces',
     items: [
-      { label: 'Pendant Necklaces', image: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=400&q=80', path: '/shop?category=necklaces' },
-      { label: 'Chokers & Collar', image: 'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=400&q=80', path: '/shop?category=necklaces' },
-      { label: 'Statement Necklace', image: 'https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?auto=format&fit=crop&w=400&q=80', path: '/shop?category=necklaces' },
+      { label: 'Pendant Necklaces', image: '/images/products/pendant-1.jpg', path: '/shop?category=necklaces' },
+      { label: 'Chokers & Collar', image: '/images/products/necklace-1.jpg', path: '/shop?category=necklaces' },
+      { label: 'Statement Necklace', image: '/images/products/necklace-2.jpg', path: '/shop?category=necklaces' },
     ],
     curated: ['Everyday Necklaces', 'Structured Necklace', 'Gold Plated Necklaces', 'Charm Necklaces', 'Black Bead Necklaces', 'Necklaces Under 2K'],
     pricePath: '/shop?category=necklaces'
@@ -53,9 +53,9 @@ const dropdownData: Record<string, {
   'Bracelets': {
     title: 'Bracelets',
     items: [
-      { label: 'Flexi Bracelets', image: 'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=400&q=80', path: '/shop?category=bracelets' },
-      { label: 'Chain Bracelets', image: 'https://images.unsplash.com/photo-1573408301185-9146fe634ad0?auto=format&fit=crop&w=400&q=80', path: '/shop?category=bracelets' },
-      { label: 'Hinge Bracelets', image: 'https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?auto=format&fit=crop&w=400&q=80', path: '/shop?category=bracelets' },
+      { label: 'Flexi Bracelets', image: '/images/products/bangle-1.jpg', path: '/shop?category=bracelets' },
+      { label: 'Chain Bracelets', image: '/images/products/bracelet-1.jpg', path: '/shop?category=bracelets' },
+      { label: 'Hinge Bracelets', image: '/images/products/bangle-2.jpg', path: '/shop?category=bracelets' },
     ],
     curated: ['Everyday Bracelets', 'Statement Bracelets', 'Gold Plated Bracelets', 'Hand Harness Bracelets', 'Palm Cuffs & Cuffs', 'Silver Rakhi'],
     pricePath: '/shop?category=bracelets'
@@ -63,9 +63,9 @@ const dropdownData: Record<string, {
   'Rings': {
     title: 'Rings',
     items: [
-      { label: 'Solitaire Rings', image: 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=400&q=80', path: '/shop?category=rings' },
-      { label: 'Band Rings', image: 'https://images.unsplash.com/photo-1603561591411-07134e71a2a9?auto=format&fit=crop&w=400&q=80', path: '/shop?category=rings' },
-      { label: 'Adjustable Rings', image: 'https://images.unsplash.com/photo-1543294001-f7cbfe92237e?auto=format&fit=crop&w=400&q=80', path: '/shop?category=rings' },
+      { label: 'Solitaire Rings', image: '/images/products/ring-1.jpg', path: '/shop?category=rings' },
+      { label: 'Band Rings', image: '/images/products/ring-2.jpg', path: '/shop?category=rings' },
+      { label: 'Adjustable Rings', image: '/images/products/ring-3.jpg', path: '/shop?category=rings' },
     ],
     curated: ['Everyday Rings', 'Statement Rings', 'Silver Bands', 'Gold Plated Rings', 'Adjustable Rings', 'Rings Under 1.5K'],
     pricePath: '/shop?category=rings'
@@ -73,9 +73,9 @@ const dropdownData: Record<string, {
   "Men's": {
     title: "Men's Jewellery",
     items: [
-      { label: 'Chains', image: 'https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=400&q=80', path: '/shop?gender=men&category=necklaces' },
-      { label: 'Rings', image: 'https://images.unsplash.com/photo-1622398925373-3f91b1e275f5?auto=format&fit=crop&w=400&q=80', path: '/shop?gender=men&category=rings' },
-      { label: 'Bracelets', image: 'https://images.unsplash.com/photo-1573408301185-9146fe634ad0?auto=format&fit=crop&w=400&q=80', path: '/shop?gender=men&category=bracelets' },
+      { label: 'Chains', image: '/uploads/1784044373431-Man_wearing_silver_figaro_chain_202607142121__2_.jpeg', path: '/shop?gender=men&category=necklaces' },
+      { label: 'Rings', image: '/images/products/ring-2.jpg', path: '/shop?gender=men&category=rings' },
+      { label: 'Bracelets', image: '/images/products/bangle-2.jpg', path: '/shop?gender=men&category=bracelets' },
     ],
     curated: ['Everyday Chains', 'Kada & Bracelets', "Men's Rings", "Men's Pendants"],
     pricePath: '/shop?gender=men',
@@ -83,10 +83,10 @@ const dropdownData: Record<string, {
   'More Styles': {
     title: 'More Styles',
     items: [
-      { label: 'Toe Rings', image: 'https://images.unsplash.com/photo-1543294001-f7cbfe92237e?auto=format&fit=crop&w=400&q=80', path: '/shop?category=rings' },
-      { label: 'Brooches', image: 'https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?auto=format&fit=crop&w=400&q=80', path: '/shop?category=custom' },
-      { label: 'Nose Pins & Hair Accessories', image: 'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=400&q=80', path: '/shop?category=custom' },
-      { label: 'Anklets', image: 'https://images.unsplash.com/photo-1573408301185-9146fe634ad0?auto=format&fit=crop&w=400&q=80', path: '/shop?category=anklets' },
+      { label: 'Toe Rings', image: '/images/products/ring-1.jpg', path: '/shop?category=rings' },
+      { label: 'Brooches', image: '/images/products/pendant-1.jpg', path: '/shop?category=custom' },
+      { label: 'Nose Pins & Hair Accessories', image: '/images/products/earring-2.jpg', path: '/shop?category=custom' },
+      { label: 'Anklets', image: '/images/products/bangle-1.jpg', path: '/shop?category=anklets' },
     ],
     curated: ['Septum Rings', 'Juda Pins', 'Brooch', 'All Styles'],
     pricePath: '/shop',
