@@ -62,9 +62,13 @@ export default function Header() {
   return (
     <>
       {/* Top sticky nav container */}
-      <div className="fixed top-0 left-0 right-0 z-50 flex flex-col w-full shadow-[0_4px_20px_rgba(0,0,0,0.2)]">
+      <div className="fixed top-0 left-0 right-0 z-50 flex flex-col w-full transition-all duration-500">
         {/* Main Navigation Bar */}
-        <header className="bg-[#0A0A0A] border-b border-white/5 px-6 sm:px-12 py-4 flex items-center justify-between relative transition-all duration-300">
+        <header className={`px-6 sm:px-12 py-4 flex items-center justify-between relative transition-all duration-500 ease-in-out ${
+          scrollY > 40
+            ? 'bg-[#0A0A0A]/95 backdrop-blur-md border-b border-white/10 shadow-[0_4px_20px_rgba(0,0,0,0.5)]'
+            : 'bg-gradient-to-b from-black/80 via-black/40 to-transparent border-b border-transparent shadow-none'
+        }`}>
           
           {/* Logo & Mobile Menu Toggle */}
           <div className="flex items-center gap-4">
