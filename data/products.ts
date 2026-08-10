@@ -361,7 +361,7 @@ export const products: Product[] = [
     metal: '925 Sterling Silver',
     stone: 'None',
     weight: '24.5g',
-    images: ['https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=800&q=80'],
+    images: ['/uploads/1784044373431-Man_wearing_silver_figaro_chain_202607142121__2_.jpeg', '/uploads/1784044413552-Man_wearing_silver_figaro_chain_202607142122.jpeg'],
     rating: 4.9,
     reviewCount: 42,
     inStock: true,
