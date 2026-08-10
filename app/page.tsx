@@ -136,19 +136,12 @@ export default function HomePage() {
 
   /* ── Category highlights ── */
   const categories = [
-    { label: 'Rings', count: dbProducts.filter((p) => p.category?.toLowerCase() === 'rings').length, href: '/shop?category=rings', image: '/images/products/ring-2.jpg' },
-    { label: 'Necklaces', count: dbProducts.filter((p) => p.category?.toLowerCase() === 'necklaces').length, href: '/shop?category=necklaces', image: '/images/products/necklace-1.jpg' },
-    { label: 'Earrings', count: dbProducts.filter((p) => p.category?.toLowerCase() === 'earrings').length, href: '/shop?category=earrings', image: '/images/products/earring-1.jpg' },
-    { label: 'Bangles', count: dbProducts.filter((p) => p.category?.toLowerCase() === 'bangles' || p.category?.toLowerCase() === 'bracelets').length, href: '/shop?category=bangles', image: '/images/products/bangle-1.jpg' },
-    { label: 'Pendants', count: dbProducts.filter((p) => p.category?.toLowerCase() === 'pendants').length, href: '/shop?category=pendants', image: '/images/products/pendant-1.jpg' },
-  ];
-
-  /* ── Stats ── */
-  const stats = [
-    { value: '1987', label: 'Established' },
-    { value: '10K+', label: 'Happy Clients' },
-    { value: '925', label: 'Hallmarked Silver' },
-    { value: '100%', label: 'Certified Gems' },
+    { label: 'Rings', tagline: 'Solitaires & Bands', href: '/shop?category=rings', image: '/images/products/ring-2.jpg' },
+    { label: 'Necklaces', tagline: 'Chokers & Sets', href: '/shop?category=necklaces', image: '/images/products/necklace-1.jpg' },
+    { label: 'Chains', tagline: 'Sterling Silver Chains', href: '/shop?category=chains', image: '/uploads/1784044373431-Man_wearing_silver_figaro_chain_202607142121__2_.jpeg' },
+    { label: 'Earrings', tagline: 'Studs, Hoops & Jhumkas', href: '/shop?category=earrings', image: '/images/products/earring-1.jpg' },
+    { label: 'Bracelets', tagline: 'Kadas & Bracelets', href: '/shop?category=bracelets', image: '/images/products/bangle-1.jpg' },
+    { label: 'Pendants', tagline: 'Gemstone Pendants', href: '/shop?category=pendants', image: '/images/products/pendant-1.jpg' },
   ];
 
   return (
@@ -291,79 +284,64 @@ export default function HomePage() {
       </section>
 
       {/* ═══════════════════════════════════════════════
-          STATS STRIP
-      ═══════════════════════════════════════════════ */}
-      <section className="bg-[#0A0A0A] border-t border-white/5">
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-10 py-8 sm:py-10">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 sm:gap-6">
-            {stats.map((stat, i) => (
-              <Reveal key={stat.label} delay={i * 0.1}>
-                <div className="text-center">
-                  <span className="font-cormorant text-3xl sm:text-4xl lg:text-5xl font-bold text-white block mb-1">
-                    {stat.value}
-                  </span>
-                  <span className="text-white/40 text-[10px] sm:text-xs uppercase tracking-[0.2em]">
-                    {stat.label}
-                  </span>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════════
           BROWSE BY CATEGORY — Immersive Visual Cards
       ═══════════════════════════════════════════════ */}
       <section className="bg-white py-20 sm:py-28 lg:py-32" id="categories">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-10">
           <Reveal>
             <div className="text-center mb-14 sm:mb-20">
-              <span className="text-[10px] sm:text-xs uppercase tracking-[0.3em] text-warm-gray font-medium block mb-4">
-                Curated for You
+              <span className="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-warm-gray font-semibold block mb-3">
+                Curated Collections
               </span>
               <h2 className="font-cormorant text-4xl sm:text-5xl lg:text-6xl text-charcoal font-bold leading-tight">
                 Browse by Category
               </h2>
+              <div className="w-16 h-0.5 bg-charcoal/20 mx-auto mt-4 rounded-full" />
             </div>
           </Reveal>
 
           <Reveal delay={0.15}>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6">
-              {categories.map((cat, idx) => (
-                <Link
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-5 lg:gap-6">
+              {categories.map((cat) => (
+                <motion.div
                   key={cat.label}
-                  href={cat.href}
-                  className="group relative aspect-[4/5] sm:aspect-[3/4] overflow-hidden rounded-2xl bg-light-gray shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] transition-all duration-500 border border-gray-100"
+                  whileHover={{ y: -6 }}
+                  transition={{ duration: 0.3, ease: 'easeOut' }}
+                  className="w-full"
                 >
-                  {/* Category Image Background */}
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={cat.image}
-                    alt={cat.label}
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-750 ease-out group-hover:scale-105"
-                  />
-                  {/* Luxury dark gradient overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-black/5 group-hover:from-black/95 transition-all duration-500 z-10" />
-                  
-                  {/* Content Overlaid at Bottom */}
-                  <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-6 z-20 flex flex-col items-center text-center">
-                    <span className="text-[9px] uppercase tracking-[0.2em] text-white/60 mb-1 block">
-                      Collection
-                    </span>
-                    <h3 className="font-cormorant text-xl sm:text-2xl font-bold text-white mb-2 leading-tight">
-                      {cat.label}
-                    </h3>
-                    
-                    {/* Glassmorphic Shop Badge / Item Count */}
-                    <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-[10px] font-semibold text-white/90 uppercase tracking-wider transition-all duration-300 group-hover:bg-white group-hover:text-charcoal group-hover:border-white">
-                      <span>Shop Now</span>
-                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="transition-transform duration-300 group-hover:translate-x-0.5">
-                        <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
-                      </svg>
+                  <Link
+                    href={cat.href}
+                    className="group relative block aspect-[3/4] sm:aspect-[4/5] overflow-hidden rounded-2xl sm:rounded-3xl bg-black border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.18)] hover:border-black/20 transition-all duration-500"
+                  >
+                    {/* Category Image Background */}
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={cat.image}
+                      alt={cat.label}
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:scale-110 opacity-90 group-hover:opacity-100"
+                    />
+                    {/* Luxury dark gradient overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10 group-hover:from-black/95 group-hover:via-black/50 transition-all duration-500 z-10" />
+
+                    {/* Content Overlaid at Bottom */}
+                    <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-5 z-20 flex flex-col items-center text-center transition-transform duration-300 group-hover:-translate-y-1">
+                      <span className="text-[9px] uppercase tracking-[0.25em] text-white/70 mb-1 font-semibold block transition-colors duration-300 group-hover:text-white">
+                        {cat.tagline}
+                      </span>
+                      <h3 className="font-cormorant text-xl sm:text-2xl font-bold text-white mb-3 leading-tight tracking-wide">
+                        {cat.label}
+                      </h3>
+
+                      {/* Glassmorphic Shop Button / Badge */}
+                      <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-white/15 backdrop-blur-md border border-white/30 rounded-full text-[10px] font-bold text-white uppercase tracking-wider transition-all duration-300 group-hover:bg-white group-hover:text-black group-hover:border-white group-hover:shadow-md">
+                        <span>Explore</span>
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="transition-transform duration-300 group-hover:translate-x-1">
+                          <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
+                        </svg>
+                      </div>
                     </div>
-                  </div>
-                </Link>
+                  </Link>
+                </motion.div>
               ))}
             </div>
           </Reveal>
