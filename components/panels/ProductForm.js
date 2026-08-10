@@ -216,7 +216,7 @@ export default function ProductForm({ productId, role = 'admin' }) {
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block mb-2">
                 Price ₹ *
@@ -247,7 +247,7 @@ export default function ProductForm({ productId, role = 'admin' }) {
             </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
               <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block mb-2">
                 Category *
@@ -297,7 +297,7 @@ export default function ProductForm({ productId, role = 'admin' }) {
           </div>
 
           {/* Metal and Stone Specifications */}
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block mb-2">
                 Metal Type
@@ -405,7 +405,7 @@ export default function ProductForm({ productId, role = 'admin' }) {
               Product Images * (Min 1)
             </span>
             
-            <div className="grid grid-cols-4 gap-3">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {images.map((url, index) => (
                 <div key={url} className="w-16 h-16 rounded-xl border border-gray-200 bg-gray-50 overflow-hidden relative flex-shrink-0 flex items-center justify-center group">
                   {/* eslint-disable-next-line @next/next/no-img-element */}

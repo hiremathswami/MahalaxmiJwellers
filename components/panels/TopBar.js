@@ -1,8 +1,8 @@
 import React from 'react';
 import { useAuth } from '@/lib/useAuth';
-import { LogOut, ShieldAlert } from 'lucide-react';
+import { LogOut, ShieldAlert, Menu } from 'lucide-react';
 
-export default function TopBar({ title }) {
+export default function TopBar({ title, onToggleMobileSidebar }) {
   const { user, role, signOut } = useAuth();
   
   // Format current date in Belagavi timezone / local format
@@ -14,10 +14,19 @@ export default function TopBar({ title }) {
   });
 
   return (
-    <header className="bg-white border-b border-gray-200 h-16 px-6 flex items-center justify-between sticky top-0 z-20 shadow-[0_1px_2px_rgba(0,0,0,0.01)]">
-      {/* Title / Section */}
-      <div>
-        <h2 className="font-cormorant text-xl sm:text-2xl font-bold text-gray-900 tracking-wide uppercase">
+    <header className="bg-white border-b border-gray-200 h-16 px-4 sm:px-6 flex items-center justify-between sticky top-0 z-20 shadow-[0_1px_2px_rgba(0,0,0,0.01)]">
+      {/* Title & Mobile Hamburger Button */}
+      <div className="flex items-center gap-3">
+        {onToggleMobileSidebar && (
+          <button
+            onClick={onToggleMobileSidebar}
+            className="lg:hidden p-2 text-gray-700 hover:text-gray-950 hover:bg-gray-100 rounded-xl transition-colors"
+            aria-label="Toggle navigation menu"
+          >
+            <Menu className="w-5 h-5" />
+          </button>
+        )}
+        <h2 className="font-cormorant text-base sm:text-xl md:text-2xl font-bold text-gray-900 tracking-wide uppercase truncate max-w-[180px] sm:max-w-none">
           {title}
         </h2>
       </div>

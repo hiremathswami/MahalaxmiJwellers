@@ -36,8 +36,8 @@ export default function OrderTable({ orders, role, onViewClick }) {
 
   return (
     <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.01)]">
-      <div className="overflow-x-auto">
-        <table className="w-full text-left border-collapse">
+      <div className="overflow-x-auto min-w-full">
+        <table className="w-full text-left border-collapse min-w-[700px]">
           <thead>
             <tr className="bg-gray-50 border-b border-gray-100">
               <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-gray-400">Order ID</th>

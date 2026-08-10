@@ -8,6 +8,7 @@ import { useAdminGuard } from '@/lib/roleGuard';
 export default function AdminLayout({ children }) {
   const { authorized, loading } = useAdminGuard();
   const [title, setTitle] = useState('Admin Panel');
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
   if (loading || !authorized) {
     return (
@@ -22,15 +23,26 @@ export default function AdminLayout({ children }) {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex font-inter">
+    <div className="min-h-screen bg-gray-50 flex font-inter relative overflow-x-hidden">
+      {/* Mobile Drawer Overlay */}
+      {mobileSidebarOpen && (
+        <div 
+          onClick={() => setMobileSidebarOpen(false)}
+          className="fixed inset-0 bg-black/60 backdrop-blur-xs z-40 lg:hidden transition-opacity"
+        />
+      )}
+
       {/* Admin Navigation Sidebar */}
-      <Sidebar />
+      <Sidebar 
+        mobileOpen={mobileSidebarOpen} 
+        onClose={() => setMobileSidebarOpen(false)} 
+      />
       
       {/* Content Workspace */}
-      <div className="pl-60 flex-1 flex flex-col min-h-screen">
-        <TopBar title={title} />
+      <div className="lg:pl-60 pl-0 flex-1 flex flex-col min-h-screen w-full min-w-0">
+        <TopBar title={title} onToggleMobileSidebar={() => setMobileSidebarOpen(!mobileSidebarOpen)} />
         
-        <main className="p-6 sm:p-8 flex-1 max-w-[1600px] w-full mx-auto">
+        <main className="p-4 sm:p-6 lg:p-8 flex-1 max-w-[1600px] w-full mx-auto min-w-0">
           {React.Children.map(children, child => {
             if (React.isValidElement(child)) {
               return React.cloneElement(child, { setTitle });

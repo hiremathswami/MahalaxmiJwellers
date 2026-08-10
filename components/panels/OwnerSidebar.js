@@ -10,10 +10,11 @@ import {
   AlertTriangle,
   LogOut,
   User,
-  Calendar
+  Calendar,
+  X
 } from 'lucide-react';
 
-export default function OwnerSidebar() {
+export default function OwnerSidebar({ mobileOpen = false, onClose }) {
   const pathname = usePathname();
   const { user, signOut } = useAuth();
 
@@ -27,14 +28,25 @@ export default function OwnerSidebar() {
   ];
 
   return (
-    <aside className="w-60 bg-[#0f1117] text-[#e8e8e8] flex flex-col h-screen fixed left-0 top-0 border-r border-gray-800 z-30">
+    <aside className={`w-60 bg-[#0f1117] text-[#e8e8e8] flex flex-col h-screen fixed left-0 top-0 border-r border-gray-800 z-50 transition-transform duration-300 ${
+      mobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
+    }`}>
       {/* Header / Brand */}
-      <div className="p-6 border-b border-gray-800">
-        <Link href="/owner/dashboard" className="flex flex-col items-center gap-2">
+      <div className="p-6 border-b border-gray-800 flex items-center justify-between">
+        <Link href="/owner/dashboard" onClick={onClose} className="flex flex-col items-center gap-2 mx-auto">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/brand-logo.jpeg" alt="Mahalaxmi Jewellers" className="h-14 w-auto object-contain brightness-110" />
+          <img src="/brand-logo.jpeg" alt="Mahalaxmi Jewellers" className="h-12 w-auto object-contain brightness-110" />
           <span className="text-[9px] uppercase tracking-[0.25em] text-gray-400 font-semibold block">Owner Dashboard</span>
         </Link>
+        {onClose && (
+          <button 
+            onClick={onClose}
+            className="lg:hidden p-1.5 text-gray-400 hover:text-white rounded-lg hover:bg-white/10"
+            aria-label="Close sidebar"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        )}
       </div>
 
       {/* Navigation */}
@@ -47,6 +59,7 @@ export default function OwnerSidebar() {
             <Link
               key={link.name}
               href={link.href}
+              onClick={onClose}
               className={`flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all duration-200 ${
                 isActive
                   ? 'bg-white/10 text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.15)] border-l-4 border-[#C0C0C0]'
