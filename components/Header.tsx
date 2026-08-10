@@ -63,11 +63,6 @@ export default function Header() {
     <>
       {/* Top sticky nav container */}
       <div className="fixed top-0 left-0 right-0 z-50 flex flex-col w-full shadow-[0_4px_20px_rgba(0,0,0,0.2)]">
-        {/* Announcement Bar */}
-        <div className="bg-[#121212] border-b border-white/5 text-[#9DF2D5] h-7.5 flex items-center justify-center text-[10px] font-bold tracking-widest uppercase px-4 text-center">
-          Handcrafted in 925 Sterling Silver | Free Shipping Across India
-        </div>
-
         {/* Main Navigation Bar */}
         <header className="bg-[#0A0A0A] border-b border-white/5 px-6 sm:px-12 py-4 flex items-center justify-between relative transition-all duration-300">
           

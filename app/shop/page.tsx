@@ -62,12 +62,26 @@ function ShopPageContent() {
             };
           });
 
+          // Deduplicate DB products first
+          const uniqueDbProducts: any[] = [];
+          const seenDbNames = new Set<string>();
+          dbProducts.forEach((p: any) => {
+            const normName = (p.name || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+            if (!seenDbNames.has(normName)) {
+              seenDbNames.add(normName);
+              uniqueDbProducts.push(p);
+            }
+          });
+
           // Merge: DB products take priority, add static ones that aren't in DB
-          const dbIds = new Set(dbProducts.map((p: any) => p.id));
-          const dbSlugs = new Set(dbProducts.map((p: any) => p.slug));
+          const dbIds = new Set(uniqueDbProducts.map((p: any) => p.id));
+          const dbSlugs = new Set(uniqueDbProducts.map((p: any) => p.slug));
           const merged = [
-            ...dbProducts,
-            ...products.filter((p) => !dbIds.has(p.id) && !dbSlugs.has(p.slug))
+            ...uniqueDbProducts,
+            ...products.filter((p) => {
+              const normName = (p.name || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+              return !dbIds.has(p.id) && !dbSlugs.has(p.slug) && !seenDbNames.has(normName);
+            })
           ];
           setAllProducts(merged);
         }
