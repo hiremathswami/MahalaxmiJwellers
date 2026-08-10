@@ -1,9 +1,11 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Inter, Cormorant_Garamond } from 'next/font/google';
 import './globals.css';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Script from 'next/script';
+import { AuthProvider } from '@/lib/useAuth';
+import LayoutWrapper from '@/components/LayoutWrapper';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -18,6 +20,12 @@ const cormorant = Cormorant_Garamond({
   variable: '--font-cormorant-garamond',
   display: 'swap',
 });
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+};
 
 export const metadata: Metadata = {
   title: {
@@ -34,9 +42,6 @@ export const metadata: Metadata = {
     locale: 'en_IN',
   },
 };
-
-import { AuthProvider } from '@/lib/useAuth';
-import LayoutWrapper from '@/components/LayoutWrapper';
 
 export default function RootLayout({
   children,

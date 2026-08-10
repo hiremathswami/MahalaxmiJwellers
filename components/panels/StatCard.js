@@ -8,7 +8,7 @@ export default function StatCard({ icon: Icon, label, value, trend, trendValue }
     <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-[0_2px_8px_rgba(0,0,0,0.01)] flex items-start justify-between">
       <div className="space-y-2">
         <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider block">{label}</span>
-        <span className="text-3xl font-bold text-gray-950 block">{value}</span>
+        <span className="text-2xl sm:text-3xl font-bold text-gray-950 block truncate">{value}</span>
         
         {trendValue && (
           <div className="flex items-center gap-1.5 mt-2">
