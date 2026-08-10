@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useScrollPosition } from '@/hooks/useScrollPosition';
 import { useCartStore } from '@/store/cartStore';
 import { useWishlistStore } from '@/store/wishlistStore';
@@ -22,7 +23,11 @@ const navLinks = [
 ];
 
 export default function Header() {
+  const pathname = usePathname();
   const scrollY = useScrollPosition();
+  const isHomePage = pathname === '/';
+  const isTransparent = isHomePage && scrollY <= 40;
+
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const cartItemCount = useCartStore((state) => state.getItemCount());
@@ -62,9 +67,13 @@ export default function Header() {
   return (
     <>
       {/* Top sticky nav container */}
-      <div className="fixed top-0 left-0 right-0 z-50 flex flex-col w-full">
+      <div className="fixed top-0 left-0 right-0 z-50 flex flex-col w-full transition-all duration-500">
         {/* Main Navigation Bar */}
-        <header className="bg-[#0A0A0A] px-6 sm:px-12 py-4 flex items-center justify-between relative transition-all duration-300">
+        <header className={`px-6 sm:px-12 py-4 flex items-center justify-between relative transition-all duration-500 ease-in-out ${
+          isTransparent
+            ? 'bg-gradient-to-b from-black/85 via-black/40 to-transparent border-b border-transparent shadow-none'
+            : 'bg-[#0A0A0A] border-b border-white/5 shadow-[0_4px_20px_rgba(0,0,0,0.4)]'
+        }`}>
           
           {/* Logo & Mobile Menu Toggle */}
           <div className="flex items-center gap-4">
