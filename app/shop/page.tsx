@@ -126,11 +126,31 @@ function ShopPageContent() {
       result = result.filter((p) => p.stone?.toLowerCase() === selectedStone.toLowerCase());
     }
     if (selectedGender !== 'All') {
+      const targetGender = selectedGender.toLowerCase();
       result = result.filter((p) => {
-        const nameMatch = p.name.toLowerCase().includes("men") || p.name.toLowerCase().includes("kada") || p.name.toLowerCase().includes("curb");
-        const descMatch = p.description && p.description.toLowerCase().includes("men");
-        const genderMatch = p.gender === 'men';
-        return nameMatch || descMatch || genderMatch;
+        const prodGender = (p.gender || '').toLowerCase();
+        const fullText = `${p.name} ${p.description || ''}`.toLowerCase();
+
+        if (targetGender === 'men') {
+          if (prodGender === 'men') return true;
+          if (prodGender === 'women') return false;
+
+          // Exclude anything explicitly referring to women/ladies
+          if (/\b(women|womens|women's|ladies|female)\b/i.test(fullText)) {
+            return false;
+          }
+          if (prodGender === 'unisex') return true;
+          return /\b(men|mens|men's|man|gents|gentlemen|kada|curb)\b/i.test(fullText);
+        } else if (targetGender === 'women') {
+          if (prodGender === 'women') return true;
+          if (prodGender === 'men') return false;
+
+          if (/\b(men|mens|men's|gents|gentlemen)\b/i.test(fullText) && !/\b(women|womens|women's|ladies|female)\b/i.test(fullText)) {
+            return false;
+          }
+          return true;
+        }
+        return true;
       });
     }
     result = result.filter((p) => p.price >= priceRange[0] && p.price <= priceRange[1]);
@@ -141,6 +161,15 @@ function ShopPageContent() {
     }
     return result;
   }, [allProducts, selectedCategory, selectedMetal, selectedStone, selectedGender, sortBy, priceRange]);
+
+  const pageTitle = useMemo(() => {
+    if (selectedGender.toLowerCase() === 'men') {
+      if (selectedCategory !== 'All') return `Men's ${selectedCategory}`;
+      return "Men's Jewellery Collection";
+    }
+    if (selectedCategory !== 'All') return `${selectedCategory} Collection`;
+    return 'Shop All Jewellery';
+  }, [selectedGender, selectedCategory]);
 
   return (
     <div className="bg-white min-h-screen pt-28 pb-20">
@@ -155,7 +184,7 @@ function ShopPageContent() {
 
         <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
           className="font-cormorant text-4xl lg:text-5xl text-charcoal mb-4">
-          Shop All Jewellery
+          {pageTitle}
         </motion.h1>
 
         {/* Promo Banner Container */}

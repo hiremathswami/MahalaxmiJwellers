@@ -73,14 +73,12 @@ const dropdownData: Record<string, {
   "Men's": {
     title: "Men's Jewellery",
     items: [
-      { label: 'Chains', image: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=400&q=80', path: '/shop?gender=men&category=necklaces' },
-      { label: 'Rings', image: 'https://images.unsplash.com/photo-1603561591411-07134e71a2a9?auto=format&fit=crop&w=400&q=80', path: '/shop?gender=men&category=rings' },
-      { label: 'Earrings', image: 'https://images.unsplash.com/photo-1630019852942-f89202989a59?auto=format&fit=crop&w=400&q=80', path: '/shop?gender=men&category=earrings' },
-      { label: 'Bracelets', image: 'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=400&q=80', path: '/shop?gender=men&category=bracelets' },
+      { label: 'Chains', image: 'https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=400&q=80', path: '/shop?gender=men&category=necklaces' },
+      { label: 'Rings', image: 'https://images.unsplash.com/photo-1622398925373-3f91b1e275f5?auto=format&fit=crop&w=400&q=80', path: '/shop?gender=men&category=rings' },
+      { label: 'Bracelets', image: 'https://images.unsplash.com/photo-1573408301185-9146fe634ad0?auto=format&fit=crop&w=400&q=80', path: '/shop?gender=men&category=bracelets' },
     ],
-    curated: ['Everyday Chains', 'Kada & Bracelets', 'Studs for Men', "Men's Rings"],
+    curated: ['Everyday Chains', 'Kada & Bracelets', "Men's Rings", "Men's Pendants"],
     pricePath: '/shop?gender=men',
-    isMoreStyles: true
   },
   'More Styles': {
     title: 'More Styles',
@@ -313,12 +311,18 @@ export default function Header() {
                               <Link key={i} href={dropdownData[hoveredLink].pricePath} className="text-[10px] text-white/70 hover:text-white font-semibold uppercase tracking-wider block">{f}</Link>
                             ))
                           ) : (
-                            <>
-                              <Link href={`${dropdownData[hoveredLink].pricePath}&maxPrice=1500`} className="text-[10px] text-white/70 hover:text-white font-semibold uppercase tracking-wider">Below Rs. 1500</Link>
-                              <Link href={`${dropdownData[hoveredLink].pricePath}&minPrice=1500&maxPrice=3000`} className="text-[10px] text-white/70 hover:text-white font-semibold uppercase tracking-wider">Rs. 1500 - 3000</Link>
-                              <Link href={`${dropdownData[hoveredLink].pricePath}&minPrice=3000&maxPrice=5000`} className="text-[10px] text-white/70 hover:text-white font-semibold uppercase tracking-wider">Rs. 3000 - 5000</Link>
-                              <Link href={`${dropdownData[hoveredLink].pricePath}&minPrice=5000`} className="text-[10px] text-white/70 hover:text-white font-semibold uppercase tracking-wider">Rs. 5000 Above</Link>
-                            </>
+                            (() => {
+                              const basePath = dropdownData[hoveredLink].pricePath;
+                              const sep = basePath.includes('?') ? '&' : '?';
+                              return (
+                                <div className="flex flex-col gap-2.5">
+                                  <Link href={`${basePath}${sep}maxPrice=1500`} className="text-[10px] text-white/70 hover:text-white font-semibold uppercase tracking-wider">Below Rs. 1500</Link>
+                                  <Link href={`${basePath}${sep}minPrice=1500&maxPrice=3000`} className="text-[10px] text-white/70 hover:text-white font-semibold uppercase tracking-wider">Rs. 1500 - 3000</Link>
+                                  <Link href={`${basePath}${sep}minPrice=3000&maxPrice=5000`} className="text-[10px] text-white/70 hover:text-white font-semibold uppercase tracking-wider">Rs. 3000 - 5000</Link>
+                                  <Link href={`${basePath}${sep}minPrice=5000`} className="text-[10px] text-white/70 hover:text-white font-semibold uppercase tracking-wider">Rs. 5000 Above</Link>
+                                </div>
+                              );
+                            })()
                           )}
                         </div>
                       </div>
