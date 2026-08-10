@@ -21,86 +21,10 @@ const navLinks = [
   { href: '/contact', label: 'Contact Us' },
 ];
 
-const dropdownData: Record<string, {
-  title: string;
-  items: { label: string; image: string; path: string }[];
-  curated: string[];
-  pricePath: string;
-  isMoreStyles?: boolean;
-  filterTitle?: string;
-  filters?: string[];
-}> = {
-  'Earrings': {
-    title: 'Earrings',
-    items: [
-      { label: 'Jhumkas & Studs', image: '/images/products/earring-1.jpg', path: '/shop?category=earrings' },
-      { label: 'Hoops & Huggies', image: '/images/products/earring-2.jpg', path: '/shop?category=earrings' },
-      { label: 'Ear Cuffs', image: '/images/products/earring-1.jpg', path: '/shop?category=earrings' },
-    ],
-    curated: ['Everyday Studs', 'Statement Jhumkas', 'Silver Hoops', 'Gold Ear Cuffs', 'Earrings Under 2K'],
-    pricePath: '/shop?category=earrings'
-  },
-  'Necklaces': {
-    title: 'Necklaces',
-    items: [
-      { label: 'Pendant Necklaces', image: '/images/products/pendant-1.jpg', path: '/shop?category=necklaces' },
-      { label: 'Chokers & Collar', image: '/images/products/necklace-1.jpg', path: '/shop?category=necklaces' },
-      { label: 'Statement Necklace', image: '/images/products/necklace-2.jpg', path: '/shop?category=necklaces' },
-    ],
-    curated: ['Everyday Necklaces', 'Structured Necklace', 'Gold Plated Necklaces', 'Charm Necklaces', 'Black Bead Necklaces', 'Necklaces Under 2K'],
-    pricePath: '/shop?category=necklaces'
-  },
-  'Bracelets': {
-    title: 'Bracelets',
-    items: [
-      { label: 'Flexi Bracelets', image: '/images/products/bangle-1.jpg', path: '/shop?category=bracelets' },
-      { label: 'Chain Bracelets', image: '/images/products/bracelet-1.jpg', path: '/shop?category=bracelets' },
-      { label: 'Hinge Bracelets', image: '/images/products/bangle-2.jpg', path: '/shop?category=bracelets' },
-    ],
-    curated: ['Everyday Bracelets', 'Statement Bracelets', 'Gold Plated Bracelets', 'Hand Harness Bracelets', 'Palm Cuffs & Cuffs', 'Silver Rakhi'],
-    pricePath: '/shop?category=bracelets'
-  },
-  'Rings': {
-    title: 'Rings',
-    items: [
-      { label: 'Solitaire Rings', image: '/images/products/ring-1.jpg', path: '/shop?category=rings' },
-      { label: 'Band Rings', image: '/images/products/ring-2.jpg', path: '/shop?category=rings' },
-      { label: 'Adjustable Rings', image: '/images/products/ring-3.jpg', path: '/shop?category=rings' },
-    ],
-    curated: ['Everyday Rings', 'Statement Rings', 'Silver Bands', 'Gold Plated Rings', 'Adjustable Rings', 'Rings Under 1.5K'],
-    pricePath: '/shop?category=rings'
-  },
-  "Men's": {
-    title: "Men's Jewellery",
-    items: [
-      { label: 'Chains', image: '/uploads/1784044373431-Man_wearing_silver_figaro_chain_202607142121__2_.jpeg', path: '/shop?gender=men&category=necklaces' },
-      { label: 'Rings', image: '/images/products/ring-2.jpg', path: '/shop?gender=men&category=rings' },
-      { label: 'Bracelets', image: '/images/products/bangle-2.jpg', path: '/shop?gender=men&category=bracelets' },
-    ],
-    curated: ['Everyday Chains', 'Kada & Bracelets', "Men's Rings", "Men's Pendants"],
-    pricePath: '/shop?gender=men',
-  },
-  'More Styles': {
-    title: 'More Styles',
-    items: [
-      { label: 'Toe Rings', image: '/images/products/ring-1.jpg', path: '/shop?category=rings' },
-      { label: 'Brooches', image: '/images/products/pendant-1.jpg', path: '/shop?category=custom' },
-      { label: 'Nose Pins & Hair Accessories', image: '/images/products/earring-2.jpg', path: '/shop?category=custom' },
-      { label: 'Anklets', image: '/images/products/bangle-1.jpg', path: '/shop?category=anklets' },
-    ],
-    curated: ['Septum Rings', 'Juda Pins', 'Brooch', 'All Styles'],
-    pricePath: '/shop',
-    isMoreStyles: true,
-    filterTitle: 'Shop By Metal',
-    filters: ['Silver', 'Brass']
-  }
-};
-
 export default function Header() {
   const scrollY = useScrollPosition();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
-  const [hoveredLink, setHoveredLink] = useState<string | null>(null);
   const cartItemCount = useCartStore((state) => state.getItemCount());
   const wishlistCount = useWishlistStore((state) => state.getCount());
   const { user, initialize } = useAuthStore();
@@ -138,10 +62,7 @@ export default function Header() {
   return (
     <>
       {/* Top sticky nav container */}
-      <div 
-        className="fixed top-0 left-0 right-0 z-50 flex flex-col w-full shadow-[0_4px_20px_rgba(0,0,0,0.2)]"
-        onMouseLeave={() => setHoveredLink(null)}
-      >
+      <div className="fixed top-0 left-0 right-0 z-50 flex flex-col w-full shadow-[0_4px_20px_rgba(0,0,0,0.2)]">
         {/* Announcement Bar */}
         <div className="bg-[#121212] border-b border-white/5 text-[#9DF2D5] h-7.5 flex items-center justify-center text-[10px] font-bold tracking-widest uppercase px-4 text-center">
           Handcrafted in 925 Sterling Silver | Free Shipping Across India
@@ -179,7 +100,6 @@ export default function Header() {
               <Link
                 key={link.label}
                 href={link.href}
-                onMouseEnter={() => setHoveredLink(link.label)}
                 className="text-[11px] uppercase tracking-[0.18em] font-bold text-white/70 hover:text-white transition-colors duration-200 py-1 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1.5px] after:bg-white hover:after:w-full after:transition-all after:duration-300"
               >
                 {link.label}
@@ -252,96 +172,6 @@ export default function Header() {
               )}
             </Link>
           </div>
-
-          {/* ── Dynamic Category Mega Menu Dropdown ── */}
-          <AnimatePresence>
-            {hoveredLink && dropdownData[hoveredLink] && (
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 10 }}
-                transition={{ duration: 0.2, ease: 'easeOut' }}
-                className="absolute top-[100%] left-0 right-0 bg-[#0A0A0A] border-b border-white/5 px-12 py-8 shadow-2xl z-50 pointer-events-auto text-white"
-              >
-                <div className="max-w-[1300px] mx-auto">
-                  {/* Centered Category Title */}
-                  <h3 className="font-cormorant text-xl font-extrabold text-center text-white tracking-[0.1em] mb-8 uppercase">
-                    {dropdownData[hoveredLink].title}
-                  </h3>
-
-                  <div className="grid grid-cols-12 gap-8 items-start">
-                    {/* Visual product items (grid-cols-9) */}
-                    <div className="col-span-9 grid grid-cols-4 gap-6">
-                      {dropdownData[hoveredLink].items.map((item, idx) => (
-                        <Link key={idx} href={item.path} className="group block text-center space-y-3">
-                          <div className="aspect-[4/5] rounded-2xl overflow-hidden bg-[#121212] border border-white/5 shadow-[0_1px_2px_rgba(0,0,0,0.2)]">
-                            <img 
-                              src={item.image} 
-                              alt={item.label} 
-                              className="w-full h-full object-cover group-hover:scale-104 transition-transform duration-300"
-                            />
-                          </div>
-                          <span className="text-[10px] font-bold text-white/60 group-hover:text-white transition-colors block uppercase tracking-widest">{item.label}</span>
-                        </Link>
-                      ))}
-
-                      {/* SEE ALL Card - only render if not More Styles */}
-                      {!dropdownData[hoveredLink].isMoreStyles && (
-                        <Link href={dropdownData[hoveredLink].pricePath} className="group block text-center space-y-3">
-                          <div className="aspect-[4/5] rounded-2xl overflow-hidden bg-[#9DF2D5] flex items-center justify-center border border-[#7FE1CC]">
-                            <div className="w-[78%] aspect-square rounded-full bg-black flex items-center justify-center shadow-md group-hover:scale-[1.03] transition-transform duration-300">
-                              <span className="text-[#9DF2D5] font-black text-xs tracking-wider">SEE ALL</span>
-                            </div>
-                          </div>
-                          <span className="text-[10px] font-bold text-white/60 group-hover:text-white transition-colors block uppercase tracking-widest">Can&apos;t decide?</span>
-                        </Link>
-                      )}
-                    </div>
-
-                    {/* Right side list filters (grid-cols-3) */}
-                    <div className="col-span-3 grid grid-cols-2 gap-6 border-l border-white/10 pl-8">
-                      {/* Shop by Price / Metal */}
-                      <div className="space-y-4">
-                        <h5 className="text-[9px] uppercase tracking-[0.2em] text-white/30 font-black mb-3">
-                          {dropdownData[hoveredLink].filterTitle || 'Shop By Price'}
-                        </h5>
-                        <div className="flex flex-col gap-2.5">
-                          {dropdownData[hoveredLink].filters ? (
-                            dropdownData[hoveredLink].filters.map((f, i) => (
-                              <Link key={i} href={dropdownData[hoveredLink].pricePath} className="text-[10px] text-white/70 hover:text-white font-semibold uppercase tracking-wider block">{f}</Link>
-                            ))
-                          ) : (
-                            (() => {
-                              const basePath = dropdownData[hoveredLink].pricePath;
-                              const sep = basePath.includes('?') ? '&' : '?';
-                              return (
-                                <div className="flex flex-col gap-2.5">
-                                  <Link href={`${basePath}${sep}maxPrice=1500`} className="text-[10px] text-white/70 hover:text-white font-semibold uppercase tracking-wider">Below Rs. 1500</Link>
-                                  <Link href={`${basePath}${sep}minPrice=1500&maxPrice=3000`} className="text-[10px] text-white/70 hover:text-white font-semibold uppercase tracking-wider">Rs. 1500 - 3000</Link>
-                                  <Link href={`${basePath}${sep}minPrice=3000&maxPrice=5000`} className="text-[10px] text-white/70 hover:text-white font-semibold uppercase tracking-wider">Rs. 3000 - 5000</Link>
-                                  <Link href={`${basePath}${sep}minPrice=5000`} className="text-[10px] text-white/70 hover:text-white font-semibold uppercase tracking-wider">Rs. 5000 Above</Link>
-                                </div>
-                              );
-                            })()
-                          )}
-                        </div>
-                      </div>
-
-                      {/* Curated By */}
-                      <div className="space-y-4">
-                        <h5 className="text-[9px] uppercase tracking-[0.2em] text-white/30 font-black mb-3">Curated By</h5>
-                        <div className="flex flex-col gap-2.5">
-                          {dropdownData[hoveredLink].curated.map((c, i) => (
-                            <Link key={i} href={dropdownData[hoveredLink].pricePath} className="text-[10px] text-white/70 hover:text-white font-semibold uppercase tracking-wider truncate block">{c}</Link>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
         </header>
       </div>
 
