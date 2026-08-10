@@ -147,6 +147,11 @@ function ShopPageContent() {
         const fullText = `${p.name} ${p.description || ''}`.toLowerCase();
 
         if (targetGender === 'men') {
+          // Strictly exclude earrings from Men's collection as requested
+          const cat = (p.category || '').toLowerCase();
+          if (cat === 'earrings' || cat === 'earring' || /\b(earring|earrings|jhumka|jhumkas|hoop|hoops)\b/i.test(fullText)) {
+            return false;
+          }
           if (prodGender === 'men') return true;
           if (prodGender === 'women') return false;
 
@@ -154,7 +159,6 @@ function ShopPageContent() {
           if (/\b(women|womens|women's|ladies|female)\b/i.test(fullText)) {
             return false;
           }
-          if (prodGender === 'unisex') return true;
           return /\b(men|mens|men's|man|gents|gentlemen|kada|curb)\b/i.test(fullText);
         } else if (targetGender === 'women') {
           if (prodGender === 'women') return true;
