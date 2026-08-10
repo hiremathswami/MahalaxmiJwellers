@@ -1,7 +1,8 @@
 import { supabaseAdmin } from '@/lib/supabaseAdmin';
 import { withAdmin } from '@/middleware/withAdmin';
 
-const VALID_CATEGORIES = ['rings', 'necklaces', 'earrings', 'bracelets', 'anklets', 'custom'];
+const VALID_CATEGORIES = ['rings', 'necklaces', 'chains', 'earrings', 'bracelets', 'bangles', 'pendants', 'anklets', 'custom'];
+const DB_ALLOWED_CATEGORIES = ['rings', 'necklaces', 'earrings', 'bracelets', 'anklets', 'custom'];
 
 export async function GET(request, { params }) {
   try {
@@ -29,6 +30,7 @@ export async function GET(request, { params }) {
     let metal = '';
     let stone = '';
     let gender = '';
+    let category = product.category || '';
 
     if (product.description && product.description.trim().startsWith('{')) {
       try {
@@ -38,6 +40,7 @@ export async function GET(request, { params }) {
         metal = parsed.metal || '';
         stone = parsed.stone || '';
         gender = parsed.gender || '';
+        if (parsed.category) category = parsed.category;
       } catch (e) {
         // Fallback
       }
@@ -47,6 +50,7 @@ export async function GET(request, { params }) {
       success: true,
       product: {
         ...product,
+        category,
         description: descText,
         is_bestseller,
         isBestSeller: is_bestseller,
@@ -99,6 +103,7 @@ export async function PUT(request, { params }) {
     let currentMetal = '';
     let currentStone = '';
     let currentGender = '';
+    let currentCategory = existingProduct.category || '';
 
     if (existingProduct.description && existingProduct.description.trim().startsWith('{')) {
       try {
@@ -108,6 +113,7 @@ export async function PUT(request, { params }) {
         currentMetal = parsed.metal || '';
         currentStone = parsed.stone || '';
         currentGender = parsed.gender || '';
+        if (parsed.category) currentCategory = parsed.category;
       } catch (e) {}
     } else {
       currentDescText = existingProduct.description || '';
@@ -118,13 +124,18 @@ export async function PUT(request, { params }) {
     const updatedMetal = body.metal !== undefined ? (body.metal || '') : currentMetal;
     const updatedStone = body.stone !== undefined ? (body.stone || '') : currentStone;
     const updatedGender = body.gender !== undefined ? (body.gender || '') : currentGender;
+    const updatedCategory = body.category !== undefined ? (body.category || '') : currentCategory;
+
+    const requestedCat = updatedCategory ? updatedCategory.toLowerCase() : '';
+    const dbCategory = (requestedCat && DB_ALLOWED_CATEGORIES.includes(requestedCat)) ? requestedCat : 'custom';
 
     const descriptionJson = JSON.stringify({
       text: updatedDesc,
       is_bestseller: updatedIsBestseller,
       metal: updatedMetal,
       stone: updatedStone,
-      gender: updatedGender
+      gender: updatedGender,
+      category: requestedCat
     });
 
     // 4. Extract fields to update
@@ -144,7 +155,7 @@ export async function PUT(request, { params }) {
       if (body.category && !VALID_CATEGORIES.includes(body.category.toLowerCase())) {
         return Response.json({ success: false, error: `Invalid category. Must be one of: ${VALID_CATEGORIES.join(', ')}` }, { status: 400 });
       }
-      updates.category = body.category ? body.category.toLowerCase() : null;
+      updates.category = dbCategory;
     }
     if (body.weight_grams !== undefined) {
       updates.weight_grams = body.weight_grams ? Number(body.weight_grams) : null;

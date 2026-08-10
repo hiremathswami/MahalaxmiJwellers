@@ -29,7 +29,7 @@ export default function AdminProductsPage({ setTitle }) {
   // Toast notifications
   const [toast, setToast] = useState({ show: false, message: '', type: 'success' });
 
-  const categories = ['All', 'Rings', 'Necklaces', 'Earrings', 'Bracelets', 'Anklets', 'Custom'];
+  const categories = ['All', 'Rings', 'Necklaces', 'Chains', 'Earrings', 'Bracelets', 'Anklets', 'Custom'];
 
   useEffect(() => {
     if (setTitle) setTitle('Products Catalog');

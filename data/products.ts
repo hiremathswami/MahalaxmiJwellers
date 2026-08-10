@@ -4,7 +4,7 @@ export interface Product {
   name: string;
   price: number;
   originalPrice?: number;
-  category: 'Rings' | 'Necklaces' | 'Earrings' | 'Bangles' | 'Pendants';
+  category: 'Rings' | 'Necklaces' | 'Chains' | 'Earrings' | 'Bangles' | 'Bracelets' | 'Pendants' | 'Anklets' | 'Custom';
   metal: string;
   stone: string;
   weight: string;
@@ -357,7 +357,7 @@ export const products: Product[] = [
     name: "Men's Classic Curb Silver Chain",
     price: 4500,
     originalPrice: 5500,
-    category: 'Necklaces',
+    category: 'Chains',
     metal: '925 Sterling Silver',
     stone: 'None',
     weight: '24.5g',

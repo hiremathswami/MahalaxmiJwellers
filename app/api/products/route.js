@@ -1,24 +1,21 @@
 import { supabaseAdmin } from '@/lib/supabaseAdmin';
 import { withAdmin } from '@/middleware/withAdmin';
 
-const VALID_CATEGORIES = ['rings', 'necklaces', 'earrings', 'bracelets', 'anklets', 'custom'];
+const VALID_CATEGORIES = ['rings', 'necklaces', 'chains', 'earrings', 'bracelets', 'bangles', 'pendants', 'anklets', 'custom'];
+const DB_ALLOWED_CATEGORIES = ['rings', 'necklaces', 'earrings', 'bracelets', 'anklets', 'custom'];
 
 export async function GET(request) {
   try {
     const { searchParams } = new URL(request.url);
     const category = searchParams.get('category');
     const search = searchParams.get('search');
-    const limit = parseInt(searchParams.get('limit') || '20', 10);
+    const limit = parseInt(searchParams.get('limit') || '200', 10);
     const offset = parseInt(searchParams.get('offset') || '0', 10);
 
     let query = supabaseAdmin
       .from('products')
       .select('*')
       .eq('is_active', true);
-
-    if (category) {
-      query = query.eq('category', category.toLowerCase());
-    }
 
     if (search) {
       query = query.ilike('name', `%${search}%`);
@@ -37,11 +34,12 @@ export async function GET(request) {
       return Response.json({ success: false, error: 'Failed to fetch products' }, { status: 500 });
     }
 
-    const processedProducts = (products || []).map(p => {
+    let processedProducts = (products || []).map(p => {
       let is_bestseller = !!p.is_bestseller;
       let metal = p.metal || '';
       let stone = p.stone || '';
       let gender = p.gender || '';
+      let prodCategory = p.category || '';
       let descText = p.description || '';
       
       if (p.description && p.description.trim().startsWith('{')) {
@@ -52,12 +50,14 @@ export async function GET(request) {
           if (parsed.metal) metal = parsed.metal;
           if (parsed.stone) stone = parsed.stone;
           if (parsed.gender) gender = parsed.gender;
+          if (parsed.category) prodCategory = parsed.category;
         } catch (e) {
           // Fallback
         }
       }
       return {
         ...p,
+        category: prodCategory,
         description: descText,
         is_bestseller,
         isBestSeller: is_bestseller,
@@ -66,6 +66,10 @@ export async function GET(request) {
         gender
       };
     });
+
+    if (category) {
+      processedProducts = processedProducts.filter(p => p.category?.toLowerCase() === category.toLowerCase());
+    }
 
     return Response.json({
       success: true,
@@ -119,13 +123,17 @@ export async function POST(request) {
       return Response.json({ success: false, error: `Invalid category. Must be one of: ${VALID_CATEGORIES.join(', ')}` }, { status: 400 });
     }
 
+    const requestedCat = category ? category.toLowerCase() : '';
+    const dbCategory = (requestedCat && DB_ALLOWED_CATEGORIES.includes(requestedCat)) ? requestedCat : 'custom';
+
     // Serialize details to description column
     const descriptionJson = JSON.stringify({
       text: description || '',
       is_bestseller: !!is_bestseller,
       metal: metal || '',
       stone: stone || '',
-      gender: gender || ''
+      gender: gender || '',
+      category: requestedCat
     });
 
     // 4. Insert Product
@@ -136,7 +144,7 @@ export async function POST(request) {
         description: descriptionJson,
         price: Number(price),
         original_price: original_price ? Number(original_price) : null,
-        category: category ? category.toLowerCase() : null,
+        category: dbCategory,
         weight_grams: weight_grams ? Number(weight_grams) : null,
         purity: purity || '925',
         stock: stock !== undefined ? parseInt(stock, 10) : 0,
@@ -158,6 +166,7 @@ export async function POST(request) {
     let resMetal = '';
     let resStone = '';
     let resGender = '';
+    let resCategory = requestedCat || product.category;
     if (product.description && product.description.trim().startsWith('{')) {
       try {
         const parsed = JSON.parse(product.description);
@@ -166,6 +175,7 @@ export async function POST(request) {
         resMetal = parsed.metal || '';
         resStone = parsed.stone || '';
         resGender = parsed.gender || '';
+        if (parsed.category) resCategory = parsed.category;
       } catch (e) {}
     } else {
       resDescText = product.description || '';
@@ -175,6 +185,7 @@ export async function POST(request) {
       success: true,
       product: {
         ...product,
+        category: resCategory,
         description: resDescText,
         is_bestseller: resIsBestseller,
         metal: resMetal,

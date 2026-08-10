@@ -8,7 +8,7 @@ import ProductCard from '@/components/ProductCard';
 import PromoBanner from '@/components/PromoBanner';
 import { products } from '@/data/products';
 
-const categories = ['All', 'Rings', 'Necklaces', 'Earrings', 'Bracelets', 'Bangles', 'Pendants', 'Anklets', 'Custom'] as const;
+const categories = ['All', 'Rings', 'Necklaces', 'Chains', 'Earrings', 'Bracelets', 'Bangles', 'Pendants', 'Anklets', 'Custom'] as const;
 const metals = ['All', '925 Sterling Silver', 'Oxidized Sterling Silver', 'Platinum-Plated Silver', 'Rhodium-Plated Silver', 'Platinum', 'Silver', 'Brass'] as const;
 const stones = ['All', 'Diamond', 'Ruby', 'Emerald', 'Sapphire'] as const;
 
@@ -16,6 +16,7 @@ const stones = ['All', 'Diamond', 'Ruby', 'Emerald', 'Sapphire'] as const;
 const categoryDefaultImages: Record<string, string> = {
   rings: '/images/products/ring-2.jpg',
   necklaces: '/images/products/necklace-1.jpg',
+  chains: '/uploads/1784044373431-Man_wearing_silver_figaro_chain_202607142121__2_.jpeg',
   earrings: '/images/products/earring-1.jpg',
   bracelets: '/images/products/bangle-1.jpg',
   bangles: '/images/products/bangle-1.jpg',

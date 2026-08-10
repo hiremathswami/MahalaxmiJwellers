@@ -34,7 +34,7 @@ export default function ProductForm({ productId, role = 'admin' }) {
   const [stone, setStone] = useState('');
   const [gender, setGender] = useState('unisex');
 
-  const categories = ['rings', 'necklaces', 'earrings', 'bracelets', 'anklets', 'custom'];
+  const categories = ['rings', 'necklaces', 'chains', 'earrings', 'bracelets', 'bangles', 'pendants', 'anklets', 'custom'];
 
   useEffect(() => {
     const fetchProductDetails = async () => {
