@@ -1,0 +1,6 @@
+# User-agent rules for Mahalaxmi Jewellers
+User-agent: *
+Allow: /
+
+# Sitemap URL
+Sitemap: https://mahalaxmijewellers.com/sitemap.xml
